@@ -9,6 +9,6 @@ Foederati::Providers.register :dpla do
   results.total = 'count'
 
   fields.title = %w(sourceResource title)
-  fields.thumbnail = %w(sourceResource object)
+  fields.thumbnail = 'object'
   fields.url = 'isShownAt'
 end

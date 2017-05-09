@@ -35,11 +35,43 @@ module Foederati
     end
 
     def search(**params)
-      connection.get(format(urls.api, default_params.merge(params)))
+      response = connection.get(format(urls.api, default_params.merge(params)))
+      results_from_response_body(response.body)
     end
 
     def default_params
       { api_key: Foederati.api_keys.send(id) }.merge(Foederati.defaults.to_h)
+    end
+
+    protected
+
+    # TODO this is not resilient to missing keys
+    def fetch_deep(keys, hash)
+      [keys].flatten.reduce(hash, :[])
+    end
+
+    def fetch_from_response(field, hash)
+      if field.respond_to?(:call)
+        field.call(hash)
+      else
+        fetch_deep(field, hash)
+      end
+    end
+
+    # TODO move this and the above methods to a custom faraday response middleware
+    def results_from_response_body(body)
+      {
+        id => {
+          total: fetch_from_response(results.total, body),
+          results: fetch_from_response(results.items, body).map do |item|
+            {
+              title: fetch_from_response(fields.title, item),
+              thumbnail: fetch_from_response(fields.thumbnail, item),
+              url: fetch_from_response(fields.url, item)
+            }
+          end
+        }
+      }
     end
   end
 end
