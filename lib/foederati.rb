@@ -1,4 +1,16 @@
 # frozen_string_literal: true
 module Foederati
-  # Your code goes here...
+  autoload :Provider, 'foederati/provider'
+  autoload :Providers, 'foederati/providers'
+
+  class << self
+    def search(id, **params)
+      Providers.get(id).search(params)
+    end
+  end
+end
+
+# @todo something nicer than this
+Dir.glob(File.expand_path("../foederati/providers/*.rb", __FILE__)).each do |file|
+  require file
 end

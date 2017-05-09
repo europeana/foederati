@@ -18,7 +18,12 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.9.3'
 
+  s.add_dependency 'faraday', '~> 0.12'
+  s.add_dependency 'faraday_middleware'
+  s.add_dependency 'typhoeus', '~> 1'
+
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rubocop', '0.39.0' # only update when Hound does
   s.add_development_dependency 'rspec', '~> 3.5'
+  s.add_development_dependency 'webmock', '~> 2'
 end
