@@ -15,10 +15,10 @@ module Foederati
       @urls = Urls.new
       @results = Results.new
       @fields = Fields.new
-      instance_eval &block if block_given?
+      instance_eval(&block) if block_given?
     end
 
-    # @todo move this to a separate `Search` class?
+    # TODO move this to a separate `Search` class?
     def connection
       @connection ||= begin
         Faraday.new do |conn|

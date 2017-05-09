@@ -10,7 +10,7 @@ module Foederati
   end
 end
 
-# @todo something nicer than this
-Dir.glob(File.expand_path("../foederati/providers/*.rb", __FILE__)).each do |file|
+# TODO something nicer than this
+Dir.glob(File.expand_path('../foederati/providers/*.rb', __FILE__)).each do |file|
   require file
 end
