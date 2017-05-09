@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 RSpec.describe Foederati::Provider do
   describe '#urls' do
-    subject { described_class.new.urls }
+    subject { described_class.new(:new_provider).urls }
     it { is_expected.to respond_to :api }
     it { is_expected.to respond_to :site }
   end
 
   describe '#results' do
-    subject { described_class.new.results }
+    subject { described_class.new(:new_provider).results }
     it { is_expected.to respond_to :items }
     it { is_expected.to respond_to :total }
   end
 
   describe '#fields' do
-    subject { described_class.new.fields }
+    subject { described_class.new(:new_provider).fields }
     it { is_expected.to respond_to :title }
     it { is_expected.to respond_to :thumbnail }
     it { is_expected.to respond_to :url }
@@ -21,7 +21,7 @@ RSpec.describe Foederati::Provider do
 
   describe '#initialize' do
     it 'evaluates a given block' do
-      provider = described_class.new do
+      provider = described_class.new(:new_provider) do
         urls.api = 'http://api.example.com/'
       end
       expect(provider.urls.api).to eq('http://api.example.com/')
@@ -37,7 +37,7 @@ RSpec.describe Foederati::Provider do
     it 'sends an HTTP GET request to the API' do
       stub_request(:get, api_url).with(query: api_params)
 
-      provider = described_class.new
+      provider = described_class.new(:new_provider)
       provider.urls.api = "#{api_url}?q=%{query}&k=%{api_key}"
       provider.search(query: query, api_key: api_key)
 

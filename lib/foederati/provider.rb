@@ -9,9 +9,10 @@ module Foederati
     Results = Struct.new(:items, :total)
     Fields = Struct.new(:title, :thumbnail, :url)
 
-    attr_accessor :urls, :results, :fields
+    attr_reader :id, :urls, :results, :fields
 
-    def initialize(&block)
+    def initialize(id, &block)
+      @id = id
       @urls = Urls.new
       @results = Results.new
       @fields = Fields.new
@@ -34,7 +35,11 @@ module Foederati
     end
 
     def search(**params)
-      connection.get(format(urls.api, params))
+      connection.get(format(urls.api, default_params.merge(params)))
+    end
+
+    def default_params
+      { api_key: Foederati.api_keys.send(id) }.merge(Foederati.defaults.to_h)
     end
   end
 end

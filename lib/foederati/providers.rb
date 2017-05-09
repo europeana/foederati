@@ -11,7 +11,7 @@ module Foederati
       #
       # @param id [Symbol] unique identifier for the provider
       def register(id, &block)
-        registry[id] = Provider.new(&block)
+        registry[id] = Provider.new(id, &block)
       end
 
       ##
