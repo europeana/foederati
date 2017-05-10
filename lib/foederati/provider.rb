@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-require 'faraday'
-require 'faraday_middleware'
-require 'typhoeus/adapters/faraday'
-
 module Foederati
   class Provider
+    autoload :Request, 'foederati/provider/request'
+    autoload :Response, 'foederati/provider/response'
+
+    # TODO validate the type of values added to these
     Urls = Struct.new(:api, :site)
     Results = Struct.new(:items, :total)
     Fields = Struct.new(:title, :thumbnail, :url)
@@ -16,62 +16,21 @@ module Foederati
       @urls = Urls.new
       @results = Results.new
       @fields = Fields.new
+
       instance_eval(&block) if block_given?
+
+      self
     end
 
-    # TODO move this to a separate `Search` class?
-    def connection
-      @connection ||= begin
-        Faraday.new do |conn|
-          conn.request :retry, max: 5, interval: 3,
-                               exceptions: [Errno::ECONNREFUSED, Errno::ETIMEDOUT, 'Timeout::Error',
-                                            Faraday::Error::TimeoutError, EOFError]
-
-          conn.response :json, content_type: /\bjson$/
-
-          conn.adapter :typhoeus
-        end
-      end
-    end
-
+    # TODO sanity check things like presence of API URL
     def search(**params)
-      response = connection.get(format(urls.api, default_params.merge(params)))
-      results_from_response_body(response.body)
-    end
-
-    def default_params
-      { api_key: Foederati.api_keys.send(id) }.merge(Foederati.defaults.to_h)
+      request.execute(params).normalise
     end
 
     protected
 
-    # TODO this is not resilient to missing keys
-    def fetch_deep(keys, hash)
-      [keys].flatten.reduce(hash, :[])
-    end
-
-    def fetch_from_response(field, hash)
-      if field.respond_to?(:call)
-        field.call(hash)
-      else
-        fetch_deep(field, hash)
-      end
-    end
-
-    # TODO move this and the above methods to a custom faraday response middleware
-    def results_from_response_body(body)
-      {
-        id => {
-          total: fetch_from_response(results.total, body),
-          results: fetch_from_response(results.items, body).map do |item|
-            {
-              title: fetch_from_response(fields.title, item),
-              thumbnail: fetch_from_response(fields.thumbnail, item),
-              url: fetch_from_response(fields.url, item)
-            }
-          end
-        }
-      }
+    def request
+      Request.new(self)
     end
   end
 end

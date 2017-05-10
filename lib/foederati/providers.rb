@@ -9,9 +9,26 @@ module Foederati
       ##
       # Register a provider
       #
-      # @param id [Symbol] unique identifier for the provider
-      def register(id, &block)
-        registry[id] = Provider.new(id, &block)
+      # @param id_or_provider [Symbol,Foederati::Provider] identifier of a new
+      #   provider, or an instantiated provider
+      def register(id_or_provider, &block)
+        case id_or_provider
+        when Foederati::Provider
+          registry[id_or_provider.id] = id_or_provider
+        when Symbol
+          registry[id_or_provider] = Provider.new(id_or_provider, &block)
+        else
+          fail ArgumentError, "Expected Symbol or Foederati::Provider, got #{id_or_provider.class}"
+        end
+      end
+
+      ##
+      # Unregisters a provider
+      #
+      # @param id [Symbol] unique identifier of the provider
+      # @param provider [Foederati::Provider] provider removed from the registry
+      def unregister(id)
+        registry.delete(id)
       end
 
       ##

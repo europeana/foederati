@@ -29,19 +29,20 @@ RSpec.describe Foederati::Provider do
   end
 
   describe '#search' do
-    let(:api_url) { 'http://api.example.com/' }
-    let(:query) { 'fish' }
-    let(:api_key) { 'secret' }
-    let(:api_params) { { q: query, k: api_key } }
+    let(:search_params) { { query: 'fish' } }
 
-    it 'sends an HTTP GET request to the API' do
-      stub_request(:get, api_url).with(query: api_params)
-
+    it 'creates and executes a request' do
       provider = described_class.new(:new_provider)
-      provider.urls.api = "#{api_url}?q=%{query}&k=%{api_key}"
-      provider.search(query: query, api_key: api_key)
 
-      expect(a_request(:get, api_url).with(query: api_params)).to have_been_made
+      mock_request = double(Foederati::Provider::Request)
+      mock_response = double(Foederati::Provider::Response)
+
+      allow(provider).to receive(:request).and_return(mock_request)
+
+      expect(mock_request).to receive(:execute).with(search_params).and_return(mock_response)
+      expect(mock_response).to receive(:normalise)
+
+      provider.search(search_params)
     end
   end
 end
