@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 module Foederati
   class DocumentsController < ActionController::Base
+    protect_from_forgery
+
     class ProviderNotSpecifiedError < StandardError; end
 
     rescue_from ProviderNotSpecifiedError do
