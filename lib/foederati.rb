@@ -2,7 +2,10 @@
 require 'active_support/core_ext/module/delegation'
 require 'active_support/core_ext/object/blank'
 require 'active_support/hash_with_indifferent_access'
+require 'faraday'
+require 'faraday_middleware'
 require 'ostruct'
+require 'typhoeus/adapters/faraday'
 
 require 'foederati/engine' if defined?(Rails)
 

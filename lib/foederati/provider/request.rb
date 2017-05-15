@@ -1,8 +1,4 @@
 # frozen_string_literal: true
-require 'faraday'
-require 'faraday_middleware'
-require 'typhoeus/adapters/faraday'
-
 module Foederati
   class Provider
     ##
