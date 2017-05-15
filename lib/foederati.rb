@@ -4,6 +4,8 @@ require 'active_support/core_ext/object/blank'
 require 'active_support/hash_with_indifferent_access'
 require 'ostruct'
 
+require 'foederati/engine' if defined?(Rails)
+
 # TODO add logger
 module Foederati
   autoload :Provider, 'foederati/provider'
