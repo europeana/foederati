@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 require 'active_support/core_ext/module/delegation'
 require 'active_support/core_ext/object/blank'
+require 'active_support/hash_with_indifferent_access'
 require 'ostruct'
 
+# TODO add logger
 module Foederati
   autoload :Provider, 'foederati/provider'
   autoload :Providers, 'foederati/providers'
@@ -23,8 +25,17 @@ module Foederati
       @defaults ||= Defaults.new
     end
 
-    def search(id, **params)
-      Providers.get(id).search(params)
+    ##
+    # Search registered providers
+    #
+    # @param ids [Symbol] ID(s) of one or more provider to search
+    # @param params [Hash] search query parameters
+    # @return [Hash] combined results of all providers
+    # TODO run multiple searches in parallel
+    def search(*ids, **params)
+      ids.map do |id|
+        Providers.get(id).search(params)
+      end.reduce(&:merge)
     end
   end
 end

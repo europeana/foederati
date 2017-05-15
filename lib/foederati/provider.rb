@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 module Foederati
+  ##
+  # A Foederati provider is one JSON API provider capable of being searched by
+  # the Foederati.
+  #
+  # TODO allow specification of a wildcard to search all the provider's records
   class Provider
     autoload :Request, 'foederati/provider/request'
     autoload :Response, 'foederati/provider/response'

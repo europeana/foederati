@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 module Foederati
+  ##
+  # All providers known to Foederati
   class Providers
-    @registry = {}
+    @registry = HashWithIndifferentAccess.new
 
     class << self
       attr_reader :registry

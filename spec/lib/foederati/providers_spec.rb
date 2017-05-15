@@ -3,8 +3,14 @@ RSpec.describe Foederati::Providers do
   subject { described_class }
 
   describe '.registry' do
+    subject { described_class.registry }
+
+    it 'has indifferent access' do
+      expect(subject).to be_a(HashWithIndifferentAccess)
+    end
+
     it 'supports some providers by default' do
-      expect(described_class.registry.keys.sort).to eq(%i(europeana dpla digitalnz trove).sort)
+      expect(subject.keys.sort).to eq(%w(europeana dpla digitalnz trove).sort)
     end
   end
 
