@@ -13,6 +13,7 @@ module Foederati
       attr_reader :provider
 
       delegate :id, :urls, to: :provider
+      delegate :connection, to: Foederati
 
       # @param provider [Foederati::Provider] the provider to make an API request for
       def initialize(provider)
@@ -47,26 +48,6 @@ module Foederati
       # @return [String] the provider's API URL with all necessary params
       def api_url(**params)
         format(urls.api, default_params.merge(params))
-      end
-
-      ##
-      # `Faraday` connection for executing HTTP requests
-      #
-      # @return [Faraday::Connection]
-      def connection
-        @connection ||= begin
-          Faraday.new do |conn|
-            # TODO are max: 5 and interval: 3 sensible values? should they be
-            #   made configurable?
-            conn.request :retry, max: 5, interval: 3,
-                                 exceptions: [Errno::ECONNREFUSED, Errno::ETIMEDOUT, 'Timeout::Error',
-                                              Faraday::Error::TimeoutError, EOFError]
-
-            conn.response :json, content_type: /\bjson$/
-
-            conn.adapter :typhoeus
-          end
-        end
       end
     end
   end

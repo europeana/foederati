@@ -22,6 +22,11 @@ RSpec.describe Foederati do
     end
   end
 
+  describe '.connection' do
+    subject { described_class.connection }
+    it { is_expected.to be_a Faraday::Connection }
+  end
+
   describe '.search' do
     context 'with one provider specified' do
       it 'searches that provider' do

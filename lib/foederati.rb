@@ -39,6 +39,26 @@ module Foederati
         Providers.get(id).search(params)
       end.reduce(&:merge)
     end
+
+    ##
+    # `Faraday` connection for executing HTTP requests
+    #
+    # @return [Faraday::Connection]
+    def connection
+      @connection ||= begin
+        Faraday.new do |conn|
+          # TODO are max: 5 and interval: 3 sensible values? should they be
+          #   made configurable?
+          conn.request :retry, max: 5, interval: 3,
+                               exceptions: [Errno::ECONNREFUSED, Errno::ETIMEDOUT, 'Timeout::Error',
+                                            Faraday::Error::TimeoutError, EOFError]
+
+          conn.response :json, content_type: /\bjson$/
+
+          conn.adapter :typhoeus
+        end
+      end
+    end
   end
 end
 

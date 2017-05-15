@@ -62,9 +62,4 @@ RSpec.describe Foederati::Provider::Request do
         eq("http://api.example.com/?q=#{query}&k=#{api_key}&l=5")
     end
   end
-
-  describe '#connection' do
-    subject { described_class.new(provider).connection }
-    it { is_expected.to be_a Faraday::Connection }
-  end
 end
