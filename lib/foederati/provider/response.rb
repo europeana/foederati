@@ -25,7 +25,7 @@ module Foederati
       def normalise
         {
           id => {
-            total: fetch_from_response(results.total, body),
+            total: fetch_from_response(results.total, body) || 0,
             results: items_from_response.map do |item|
               {
                 title: fetch_from_response(fields.title, item),

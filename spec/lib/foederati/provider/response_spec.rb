@@ -43,9 +43,23 @@ RSpec.describe Foederati::Provider::Response do
     describe 'provider ID keyed hash' do
       subject { described_class.new(provider, faraday_response).normalise[provider.id] }
 
-      it 'has total' do
-        expect(subject).to have_key(:total)
-        expect(subject[:total]).to eq(faraday_response_body['totalItems'])
+      describe 'total' do
+        context 'when in API response' do
+          it 'is mapped' do
+            expect(subject).to have_key(:total)
+            expect(subject[:total]).to eq(faraday_response_body['totalItems'])
+          end
+        end
+
+        context 'when not in API response' do
+          before do
+            faraday_response_body.delete('totalItems')
+          end
+
+          it 'defaults to 0' do
+            expect(subject[:total]).to be_zero
+          end
+        end
       end
 
       it { is_expected.to have_key :results }
