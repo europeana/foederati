@@ -23,22 +23,38 @@ RSpec.describe Foederati::Provider::Request do
   end
 
   describe '#execute' do
-    before do
-      stub_request(:get, api_url).with(query: hash_including(q: query)).
-        to_return(status: 200,
-                  body: '{}',
-                  headers: { 'Content-Type' => 'application/json;charset=UTF-8' })
+    context 'when API responds with JSON' do
+      before do
+        stub_request(:get, api_url).with(query: hash_including(q: query)).
+          to_return(status: 200,
+                    body: '{}',
+                    headers: { 'Content-Type' => 'application/json;charset=UTF-8' })
+      end
+
+      it "sends a request to the provider's API" do
+        subject.execute(query: query)
+        expect(a_request(:get, api_url).with(query: hash_including(q: query))).to have_been_made
+      end
+
+      it 'returns a response object with Faraday response stored' do
+        response = subject.execute(query: query)
+        expect(response).to be_a Foederati::Provider::Response
+        expect(response.faraday_response).to be_a Faraday::Response
+      end
     end
 
-    it "sends a request to the provider's API" do
-      subject.execute(query: query)
-      expect(a_request(:get, api_url).with(query: hash_including(q: query))).to have_been_made
-    end
+    context 'when API responds with non-JSON' do
+      before do
+        stub_request(:get, api_url).with(query: hash_including(q: query)).
+          to_return(status: 200,
+                    body: '<html></html>',
+                    headers: { 'Content-Type' => 'text/html;charset=UTF-8' })
+      end
 
-    it 'returns a response object with Faraday response stored' do
-      response = subject.execute(query: query)
-      expect(response).to be_a Foederati::Provider::Response
-      expect(response.faraday_response).to be_a Faraday::Response
+      it 'fails with Faraday::ParsingError' do
+        expect { described_class.new(provider).execute(query: query) }.
+          to raise_error(Faraday::ParsingError)
+      end
     end
   end
 

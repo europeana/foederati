@@ -4,6 +4,7 @@ require 'active_support/core_ext/object/blank'
 require 'active_support/hash_with_indifferent_access'
 require 'faraday'
 require 'faraday_middleware'
+require 'foederati/faraday_middleware'
 require 'ostruct'
 require 'typhoeus/adapters/faraday'
 
@@ -11,6 +12,7 @@ require 'foederati/engine' if defined?(Rails)
 
 # TODO add logger
 module Foederati
+  autoload :FaradayMiddleware, 'foederati/faraday_middleware'
   autoload :Provider, 'foederati/provider'
   autoload :Providers, 'foederati/providers'
 
@@ -56,6 +58,7 @@ module Foederati
                                exceptions: [Errno::ECONNREFUSED, Errno::ETIMEDOUT, 'Timeout::Error',
                                             Faraday::Error::TimeoutError, EOFError]
 
+          conn.response :unsupported #, content_type: /\bjson$/
           conn.response :json, content_type: /\bjson$/
 
           conn.adapter :typhoeus
