@@ -5,7 +5,52 @@
 Federated API search library for Ruby.
 
 ## Usage
-TODO: How to use my plugin.
+
+### With Rails
+
+#### Configure Foederati in an initializer
+```ruby
+# config/initializers/foederati.rb
+Foederati.configure do
+  api_keys.dpla = 'dpla_api_key'
+  api_keys.digitalnz = 'digitalnz_api_key'
+  api_keys.europeana = 'europeana_api_key'
+  api_keys.trove = 'trove_api_key'
+
+  defaults.limit = 4
+end
+```
+
+#### Mount the engine
+```ruby
+# config/routes.rb
+mount Foederati::Engine
+```
+
+#### Search
+
+The Rails engine provides a single controller which searches one or more of the
+available providers' JSON APIs and returns normalised and simplified search
+results.
+
+Routes:
+* To search one provider, visit e.g. http://www.example.com/foederati/europeana?q=music
+* To search multiple providers, visit e.g. http://www.example.com/foederati?p=dpla,trove&q=music
+
+Parameters:
+* `l`: number of results to request from each provider
+* `p`: comma-separated list of the providers to search
+* `q`: search query, passed as-is to provider APIs (so keep it simple if
+  searching more than one!)
+
+
+### Without Rails
+
+TODO: instruct how to use Foederati outside of Rails.
+
+### Registering custom providers
+
+TODO: instruct how to register custom providers.
 
 ## Installation
 Add this line to your application's Gemfile:
