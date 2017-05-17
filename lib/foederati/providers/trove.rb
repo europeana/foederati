@@ -6,7 +6,7 @@ Foederati::Providers.register :trove do
   urls.site = 'http://trove.nla.gov.au/result?q=%{query}'
 
   results.items = ->(response) { response['response']['zone'].detect { |zone| zone['name'] == 'picture' }['records']['work'] }
-  results.total = ->(response) { response['response']['zone'].detect { |zone| zone['name'] == 'picture' }['records']['total'] }
+  results.total = ->(response) { response['response']['zone'].detect { |zone| zone['name'] == 'picture' }['records']['total'].to_i }
 
   fields.title = 'title'
   fields.thumbnail = ->(item) { item['identifier'].detect { |identifier| identifier['linktype'] == 'thumbnail' }['value'] }
