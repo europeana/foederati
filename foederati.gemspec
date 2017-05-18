@@ -19,8 +19,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.1.0'
 
   s.add_dependency 'activesupport', '>= 4.2.2', '< 6.0'
-  s.add_dependency 'faraday'
-  s.add_dependency 'faraday_middleware'
+  s.add_dependency 'faraday', '~> 0'
+  s.add_dependency 'faraday_middleware', '~> 0'
   s.add_dependency 'typhoeus', '~> 1'
 
   s.add_development_dependency 'rake'
