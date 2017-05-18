@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{lib,spec}/**/*', 'LICENSE.md', 'Rakefile', 'README.md']
 
-  s.required_ruby_version = '>= 1.9.3'
+  s.required_ruby_version = '>= 2.1.0'
 
   s.add_dependency 'activesupport', '>= 4.2.2', '< 6.0'
   s.add_dependency 'faraday'
