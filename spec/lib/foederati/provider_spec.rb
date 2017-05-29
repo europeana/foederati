@@ -4,6 +4,7 @@ RSpec.describe Foederati::Provider do
     subject { described_class.new(:new_provider).urls }
     it { is_expected.to respond_to :api }
     it { is_expected.to respond_to :site }
+    it { is_expected.to respond_to :logo }
   end
 
   describe '#results' do
@@ -17,6 +18,11 @@ RSpec.describe Foederati::Provider do
     it { is_expected.to respond_to :title }
     it { is_expected.to respond_to :thumbnail }
     it { is_expected.to respond_to :url }
+  end
+
+  describe '#display_name' do
+    subject { described_class.new(:new_provider) }
+    it { is_expected.to respond_to :display_name }
   end
 
   describe '#initialize' do

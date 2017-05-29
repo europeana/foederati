@@ -27,9 +27,11 @@ module Foederati
           id => {
             total: fetch_from_response(results.total, body) || 0,
             results: items_from_response.map do |item|
+              thumbnail = fetch_from_response(fields.thumbnail, item)
+              thumbnail = thumbnail.is_a?(Array) ? thumbnail.first : thumbnail
               {
                 title: fetch_from_response(fields.title, item),
-                thumbnail: fetch_from_response(fields.thumbnail, item),
+                thumbnail: thumbnail,
                 url: fetch_from_response(fields.url, item)
               }
             end

@@ -10,17 +10,18 @@ module Foederati
     autoload :Response, 'foederati/provider/response'
 
     # TODO validate the type of values added to these
-    Urls = Struct.new(:api, :site)
+    Urls = Struct.new(:api, :site, :logo)
     Results = Struct.new(:items, :total)
     Fields = Struct.new(:title, :thumbnail, :url)
 
-    attr_reader :id, :urls, :results, :fields
+    attr_reader :id, :urls, :results, :fields, :display_name
 
     def initialize(id, &block)
       @id = id
       @urls = Urls.new
       @results = Results.new
       @fields = Fields.new
+      @display_name = ''
 
       instance_eval(&block) if block_given?
 
