@@ -8,7 +8,7 @@ module Foederati
     class Request
       attr_reader :provider
 
-      delegate :id, :urls, to: :provider
+      delegate :id, :urls, :blank_query, to: :provider
       delegate :connection, to: Foederati
 
       # @param provider [Foederati::Provider] the provider to make an API request for
@@ -43,6 +43,9 @@ module Foederati
       # @param params [Hash] query-specific URL parameters
       # @return [String] the provider's API URL with all necessary params
       def api_url(**params)
+        if params[:query].blank? && blank_query
+          params[:query] = blank_query
+        end
         format(urls.api, default_params.merge(params))
       end
     end
