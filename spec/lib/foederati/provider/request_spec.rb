@@ -5,10 +5,12 @@ RSpec.describe Foederati::Provider::Request do
   let(:provider) do
     Foederati::Provider.new(:good_provider).tap do |p|
       p.urls.api = "#{api_url}?q=%{query}&k=%{api_key}&l=%{limit}"
+      p.blank_query = empty_query
     end
   end
   let(:api_url) { 'http://api.example.com/' }
   let(:query) { 'whale' }
+  let(:empty_query) { 'EMPTY' }
   let(:api_key) { 'moby' }
   let(:result_limit) { 10 }
 
@@ -68,14 +70,22 @@ RSpec.describe Foederati::Provider::Request do
   end
 
   describe '#api_url' do
-    it 'replaces placeholders in API URL with params' do
-      expect(subject.api_url(query: query)).to \
-        eq("http://api.example.com/?q=#{query}&k=#{api_key}&l=#{result_limit}")
-    end
+    context 'when the query is set' do
+      it 'replaces placeholders in API URL with params' do
+        expect(subject.api_url(query: query)).to \
+          eq("http://api.example.com/?q=#{query}&k=#{api_key}&l=#{result_limit}")
+      end
 
-    it 'overrides defaults with args' do
-      expect(subject.api_url(query: query, limit: 5)).to \
-        eq("http://api.example.com/?q=#{query}&k=#{api_key}&l=5")
+      it 'overrides defaults with args' do
+        expect(subject.api_url(query: query, limit: 5)).to \
+          eq("http://api.example.com/?q=#{query}&k=#{api_key}&l=5")
+      end
+    end
+    context 'when the query is empty' do
+      it 'replaces the query with the default empty query' do
+        expect(subject.api_url(query: '')).to \
+        eq("http://api.example.com/?q=#{empty_query}&k=#{api_key}&l=#{result_limit}")
+      end
     end
   end
 end

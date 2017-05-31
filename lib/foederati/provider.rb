@@ -14,14 +14,14 @@ module Foederati
     Results = Struct.new(:items, :total)
     Fields = Struct.new(:title, :thumbnail, :url)
 
-    attr_reader :id, :urls, :results, :fields, :display_name
+    attr_reader :id, :urls, :results, :fields
+    attr_accessor :display_name, :blank_query
 
     def initialize(id, &block)
       @id = id
       @urls = Urls.new
       @results = Results.new
       @fields = Fields.new
-      @display_name = ''
 
       instance_eval(&block) if block_given?
 
