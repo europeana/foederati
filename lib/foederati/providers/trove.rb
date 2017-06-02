@@ -14,6 +14,11 @@ Foederati::Providers.register :trove do
   results.total = ->(response) { response['response']['zone'] ? response['response']['zone'].detect { |zone| zone['name'] == 'picture' }['records']['total'].to_i : 0 }
 
   fields.title = 'title'
-  fields.thumbnail = ->(item) { item['identifier'] ? item['identifier'].detect { |identifier| identifier['linktype'] == 'thumbnail' }['value'] : nil }
+  fields.thumbnail = ->(item) do
+    if item['identifier']
+      thumb_identifier = item['identifier'].detect { |identifier| identifier['linktype'] == 'thumbnail' }
+      thumb_identifier ? thumb_identifier['value'] : nil
+    end
+  end
   fields.url = 'troveUrl'
 end
