@@ -2,8 +2,6 @@
 
 # Europeana
 Foederati::Providers.register :europeana do
-  @display_name = 'Europeana'
-
   urls.api = 'https://www.europeana.eu/api/v2/search.json?wskey=%{api_key}&query=%{query}&rows=%{limit}&profile=minimal'
   urls.site = 'http://www.europeana.eu/portal/search?q=%{query}'
   urls.logo = ''

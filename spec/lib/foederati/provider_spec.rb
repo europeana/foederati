@@ -7,6 +7,11 @@ RSpec.describe Foederati::Provider do
     it { is_expected.to respond_to :logo }
   end
 
+  describe '#default_params' do
+    subject { described_class.new(:new_provider).default_params }
+    it { is_expected.to respond_to :query }
+  end
+
   describe '#results' do
     subject { described_class.new(:new_provider).results }
     it { is_expected.to respond_to :items }
@@ -20,9 +25,21 @@ RSpec.describe Foederati::Provider do
     it { is_expected.to respond_to :url }
   end
 
-  describe '#display_name' do
+  describe '#name' do
     subject { described_class.new(:new_provider) }
-    it { is_expected.to respond_to :display_name }
+
+    context 'when not set' do
+      it 'is derived from ID' do
+        expect(subject.name).to eq('New Provider')
+      end
+    end
+
+    context 'when set' do
+      it 'is returned as set' do
+        subject.name = 'Nice name'
+        expect(subject.name).to eq('Nice name')
+      end
+    end
   end
 
   describe '#initialize' do

@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
+
+require 'bundler/setup'
+Bundler.require(:default)
+
+Dotenv.load if defined?(Dotenv)
+
+require 'foederati'
+require 'irb'
+IRB.start

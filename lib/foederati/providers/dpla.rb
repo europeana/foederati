@@ -2,7 +2,7 @@
 
 # DPLA
 Foederati::Providers.register :dpla do
-  @display_name = 'DPLA'
+  self.name = 'DPLA'
 
   urls.api = 'https://api.dp.la/v2/items?api_key=%{api_key}&q=%{query}&page_size=%{limit}'
   urls.site = 'https://dp.la/search?q=%{query}'

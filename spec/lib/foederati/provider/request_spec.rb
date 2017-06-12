@@ -5,7 +5,7 @@ RSpec.describe Foederati::Provider::Request do
   let(:provider) do
     Foederati::Provider.new(:good_provider).tap do |p|
       p.urls.api = "#{api_url}?q=%{query}&k=%{api_key}&l=%{limit}"
-      p.blank_query = empty_query
+      p.default_params.query = empty_query
     end
   end
   let(:api_url) { 'http://api.example.com/' }

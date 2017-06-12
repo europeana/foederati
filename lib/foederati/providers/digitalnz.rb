@@ -2,7 +2,7 @@
 
 # DigitalNZ
 Foederati::Providers.register :digitalnz do
-  @display_name = 'Digital NZ'
+  self.name = 'DigitalNZ'
 
   urls.api = 'https://api.digitalnz.org/v3/records.json?api_key=%{api_key}&text=%{query}&per_page=%{limit}'
   urls.site = 'https://digitalnz.org/records?text=%{query}'
