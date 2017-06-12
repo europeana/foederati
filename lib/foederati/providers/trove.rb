@@ -2,8 +2,6 @@
 
 # Trove
 Foederati::Providers.register :trove do
-  @display_name = 'Trove'
-
   @blank_query = '%20'
 
   urls.api = 'http://api.trove.nla.gov.au/result?key=%{api_key}&q=%{query}&n=%{limit}&zone=picture&encoding=json'

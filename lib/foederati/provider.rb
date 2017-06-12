@@ -15,7 +15,8 @@ module Foederati
     Fields = Struct.new(:title, :thumbnail, :url)
 
     attr_reader :id, :urls, :results, :fields
-    attr_accessor :display_name, :blank_query
+    attr_writer :name
+    attr_accessor :blank_query
 
     def initialize(id, &block)
       @id = id
@@ -26,6 +27,10 @@ module Foederati
       instance_eval(&block) if block_given?
 
       self
+    end
+
+    def name
+      @name || id.to_s.titleize
     end
 
     # TODO sanity check things like presence of API URL

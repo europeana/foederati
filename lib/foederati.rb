@@ -2,6 +2,7 @@
 require 'active_support/core_ext/module/delegation'
 require 'active_support/core_ext/object/blank'
 require 'active_support/hash_with_indifferent_access'
+require 'active_support/inflector'
 require 'faraday'
 require 'faraday_middleware'
 require 'foederati/faraday_middleware'
