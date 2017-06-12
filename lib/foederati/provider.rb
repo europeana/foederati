@@ -11,16 +11,17 @@ module Foederati
 
     # TODO validate the type of values added to these
     Urls = Struct.new(:api, :site, :logo)
+    DefaultParams = Struct.new(:query)
     Results = Struct.new(:items, :total)
     Fields = Struct.new(:title, :thumbnail, :url)
 
-    attr_reader :id, :urls, :results, :fields
+    attr_reader :id, :urls, :default_params, :results, :fields
     attr_writer :name
-    attr_accessor :blank_query
 
     def initialize(id, &block)
       @id = id
       @urls = Urls.new
+      @default_params = DefaultParams.new
       @results = Results.new
       @fields = Fields.new
 

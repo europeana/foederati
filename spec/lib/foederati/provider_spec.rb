@@ -7,6 +7,11 @@ RSpec.describe Foederati::Provider do
     it { is_expected.to respond_to :logo }
   end
 
+  describe '#default_params' do
+    subject { described_class.new(:new_provider).default_params }
+    it { is_expected.to respond_to :query }
+  end
+
   describe '#results' do
     subject { described_class.new(:new_provider).results }
     it { is_expected.to respond_to :items }

@@ -11,5 +11,12 @@ RSpec.describe Foederati::Providers do
       subject { provider.name }
       it { is_expected.to eq('Trove') }
     end
+
+    describe '#default_params' do
+      describe '#query' do
+        subject { provider.default_params.query }
+        it { is_expected.to eq('%20') }
+      end
+    end
   end
 end
