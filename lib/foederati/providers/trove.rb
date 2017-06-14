@@ -4,7 +4,6 @@
 Foederati::Providers.register :trove do
   urls.api = 'http://api.trove.nla.gov.au/result?key=%{api_key}&q=%{query}&n=%{limit}&zone=picture&encoding=json'
   urls.site = 'http://trove.nla.gov.au/result?q=%{query}'
-  urls.logo = 'http://trove.nla.gov.au/static/51223/img/trove-logo-home-v2.gif'
 
   default_params.query = '%20'
 

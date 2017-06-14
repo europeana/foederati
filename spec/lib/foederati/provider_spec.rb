@@ -4,7 +4,6 @@ RSpec.describe Foederati::Provider do
     subject { described_class.new(:new_provider).urls }
     it { is_expected.to respond_to :api }
     it { is_expected.to respond_to :site }
-    it { is_expected.to respond_to :logo }
   end
 
   describe '#default_params' do

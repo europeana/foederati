@@ -10,7 +10,7 @@ module Foederati
     autoload :Response, 'foederati/provider/response'
 
     # TODO validate the type of values added to these
-    Urls = Struct.new(:api, :site, :logo)
+    Urls = Struct.new(:api, :site)
     DefaultParams = Struct.new(:query)
     Results = Struct.new(:items, :total)
     Fields = Struct.new(:title, :thumbnail, :url)
