@@ -6,7 +6,6 @@ Foederati::Providers.register :digitalnz do
 
   urls.api = 'https://api.digitalnz.org/v3/records.json?api_key=%{api_key}&text=%{query}&per_page=%{limit}'
   urls.site = 'https://digitalnz.org/records?text=%{query}'
-  urls.logo = 'http://pro.europeana.eu/files/labs.europeana.eu/labs/blog/whos-using-what-dnzlogo.jpg'
 
   results.items = %w(search results)
   results.total = %w(search result_count)
