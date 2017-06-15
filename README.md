@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/europeana/foederati.svg?branch=develop)](https://travis-ci.org/europeana/foederati) [![Coverage Status](https://coveralls.io/repos/github/europeana/foederati/badge.svg?branch=develop)](https://coveralls.io/github/europeana/foederati?branch=develop) [![security](https://hakiri.io/github/europeana/foederati/develop.svg)](https://hakiri.io/github/europeana/foederati/develop) [![Dependency Status](https://gemnasium.com/europeana/foederati.svg)](https://gemnasium.com/europeana/foederati) [![Code Climate](https://codeclimate.com/github/europeana/foederati/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
 
 ![Foederati: ](app/assets/images/foederati/logo.png "Foederati")
+
 Federated API search library for Ruby.
 
 ## Usage
