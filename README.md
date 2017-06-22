@@ -4,7 +4,7 @@
 
 ![Foederati: ](app/assets/images/foederati/logo.png "Foederati")
 
-Federated API search library for Ruby.
+A Ruby library to search Europeana, the Digital Library of America (DPLA), the Digital Library of Australia - Trove, and the Digital Library of New Zealand - DigitalNZ. The library has been designed to make it easy to add more sources to search within.
 
 ## Usage
 
