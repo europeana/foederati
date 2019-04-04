@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.email       = ['richard.doe@rwdit.net']
   s.summary     = 'Federated search'
   s.homepage    = 'https://github.com/europeana/foederati'
-  s.license     = 'EUPL-1.1'
+  s.license     = 'EUPL-1.2'
 
   s.files = Dir['{lib,spec}/**/*', 'LICENSE.md', 'Rakefile', 'README.md']
 
